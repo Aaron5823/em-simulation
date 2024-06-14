@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+
+// Constants
+const double dt = 1e-9; // Time step (seconds)
+const double dx = 1e-2; // Space step (meters)
+const int grid_size = 100; // Number of grid points
+const int steps = 10; // Number of time steps to simulate
+
+// Function to update the fields
+void updateFields(std::vector<double>& E, std::vector<double>& H) {
+    for (int i = 0; i < grid_size - 1; ++i) {
+        H[i] += (E[i + 1] - E[i]) * (dt / dx);
+    }
+
+    for (int i = 1; i < grid_size; ++i) {
+        E[i] += (H[i] - H[i - 1]) * (dt / dx);
+    }
+}
+
+int main() {
+    // Initialize fields
+    std::vector<double> E(grid_size, 0.0);
+    std::vector<double> H(grid_size, 0.0);
+
+    // Initialize a pulse in the middle of the grid
+    E[grid_size / 2] = 1.0;
+
+    // Time-stepping loop
+    for (int t = 0; t < steps; ++t) {
+        // Update fields
+        updateFields(E, H);
+
+        // Print fields
+        std::cout << "Time step " << t << ":\n";
+        std::cout << "E field: ";
+        for (double e : E) {
+            std::cout << e << " ";
+        }
+        std::cout << "\nH field: ";
+        for (double h : H) {
+            std::cout << h << " ";
+        }
+        std::cout << "\n\n";
+    }
+
+    return 0;
+}
