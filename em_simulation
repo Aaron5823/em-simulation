@@ -2,7 +2,7 @@
 #include <vector>
 
 // Constants
-const double dt = 1e-9; // Time step (seconds)
+const double dt = 1e-9; // Time  (seconds)
 const double dx = 1e-2; // Space step (meters)
 const int grid_size = 100; // Number of grid points
 const int steps = 10; // Number of time steps to simulate
